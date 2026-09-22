@@ -31,7 +31,7 @@ var CONFIG = {
       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       atribusi: 'Citra &copy; Esri',
       zoomMaksAsli: 19
-    },
+    }
     // ,{
     //   nama: 'Ortofoto',
     //   url: 'tiles/{z}/{x}/{y}.png',
@@ -55,37 +55,14 @@ var CONFIG = {
      palet    : daftar warna cadangan. Nilai Nama_Obj yang belum ada di
                 `warna` akan diberi warna berbeda dari palet ini secara
                 berurutan, jadi kategori baru otomatis dapat warna sendiri.
+
+     urutan   : (opsional) angka prioritas tumpukan. Semakin besar,
+                semakin di atas. Bawaan berdasarkan tipe: poligon=0,
+                garis=10, titik=20. Tanpa `urutan`, letak blok di array
+                ini yang menentukan urutan antar-poligon — yang ditulis
+                terakhir tampil paling atas.
      --------------------------------------------------------------------- */
   layers: [
-    {
-      id: 'bangunan',
-      nama: 'Bangunan',
-      tipe: 'poligon',
-      berkas: 'data/Data_Bangunan.geojson',
-      aktif: true,
-      fieldNama: 'Nama_Obj',
-      fieldKategori: 'Nama_Obj',
-      popup: {
-        'Kelas objek': 'Kelas_Obj',
-        'Keterangan': 'Keterangan',
-        'Luas (ha)': 'area',
-        'ID': 'id'
-      },
-      // Nuansa merah bata sampai ungu
-      warna: {
-        'Penginapan': '#c99266',
-        'Pemukiman': '#d9b48c',
-        'Warung Makan': '#c98a7d',
-        'Musholla': '#a595c4',
-        'Kanotor Desa': '#b07a8a',
-        'Toko': '#d4948f',
-        'Cafe': '#bd97a8',
-        'Bank': '#c2a178',
-        'Puskesmas': '#cd8fa8'
-      },
-      palet: ['#b5651d', '#d08c4a', '#c0392b', '#7a5ea8', '#8e3b46',
-              '#d7574f', '#a4637a', '#96522b', '#c2417a', '#e08a5f']
-    },
     {
       id: 'lahan_kosong',
       nama: 'Lahan kosong',
@@ -104,7 +81,7 @@ var CONFIG = {
       warna: {
         'Lapangan': '#bfae8f',
         'Lahan Kosong': '#ecdba0',
-        'Semak Belukar': '#d4b877',
+        'Semak Belukar': '#d4b877'
       },
       palet: ['#d9b14a', '#c99a3a', '#a88a5c', '#e5cc7a',
               '#b9762e', '#8f7343']
@@ -126,9 +103,39 @@ var CONFIG = {
       // Nuansa hijau
       warna: {
         'Kelapa Sawit': '#6f9c74',
-        'KWT Sari Mukti': '#bcd0a0',
+        'KWT Sari Mukti': '#bcd0a0'
       },
-      palet: ['#a3c98a, #8fb875, #6f9c74, #bcd0a0, #7fb39a']
+      // diperbaiki: sebelumnya satu string panjang, sekarang lima warna terpisah
+      palet: ['#a3c98a', '#8fb875', '#6f9c74', '#bcd0a0', '#7fb39a']
+    },
+    {
+      id: 'bangunan',
+      nama: 'Bangunan',
+      tipe: 'poligon',
+      berkas: 'data/Data_Bangunan.geojson',
+      aktif: true,
+      fieldNama: 'Nama_Obj',
+      fieldKategori: 'Nama_Obj',
+      popup: {
+        'Kelas objek': 'Kelas_Obj',
+        'Keterangan': 'Keterangan',
+        'Luas (ha)': 'area',
+        'ID': 'id'
+      },
+      // Nuansa merah bata sampai ungu
+      warna: {
+        'Penginapan': '#c99266',
+        'Pemukiman': '#d9b48c',
+        'Warung Makan': '#c98a7d',
+        'Musholla': '#a595c4',
+        'Kantor Desa': '#b07a8a',   // cek: mungkin harusnya "Kantor Desa"
+        'Toko': '#d4948f',
+        'Cafe': '#bd97a8',
+        'Bank': '#c2a178',
+        'Puskesmas': '#cd8fa8'
+      },
+      palet: ['#b5651d', '#d08c4a', '#c0392b', '#7a5ea8', '#8e3b46',
+              '#d7574f', '#a4637a', '#96522b', '#c2417a', '#e08a5f']
     },
     {
       id: 'jalan',
@@ -146,7 +153,7 @@ var CONFIG = {
       },
       // Nuansa gelap sampai biru
       warna: {
-        'Jalan Desa': '#3f3f46',
+        'Jalan Desa': '#3f3f46'
       },
       palet: ['#3f3f46', '#6b7280', '#8a6d3b', '#9aa0a6', '#3d84a8',
               '#5c6b8a', '#2f6b7f', '#57534e'],
