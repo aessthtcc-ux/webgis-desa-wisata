@@ -68,6 +68,40 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  /* ------------------------------------------------- status layer tersimpan */
+
+  // Menyimpan status on/off tiap layer ke localStorage, per browser/perangkat.
+  // Tidak disinkronkan ke pengguna lain — hanya berlaku di browser ini.
+  var KUNCI_STATUS = 'statusLayerPeta'; // ganti kalau mau namespace beda per proyek
+
+  function bacaStatusLayer() {
+    try {
+      return JSON.parse(localStorage.getItem(KUNCI_STATUS) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function simpanStatusLayer(id, aktif) {
+    try {
+      var status = bacaStatusLayer();
+      status[id] = aktif;
+      localStorage.setItem(KUNCI_STATUS, JSON.stringify(status));
+    } catch (e) { /* localStorage tidak tersedia, abaikan */ }
+  }
+
+  // Terapkan status tersimpan ke CONFIG.layers sebelum data dimuat, supaya
+  // layer yang sebelumnya dimatikan/dinyalakan pengguna tetap konsisten
+  // setelah halaman dibuka ulang.
+  (function terapkanStatusTersimpan() {
+    var status = bacaStatusLayer();
+    CONFIG.layers.forEach(function (def) {
+      if (status.hasOwnProperty(def.id)) {
+        def.aktif = status[def.id];
+      }
+    });
+  })();
+
   /* ------------------------------------------------------- memuat berkas */
 
   // Setiap layer boleh memakai `berkas` (path .geojson, perlu server lokal)
@@ -281,6 +315,7 @@
     cek.addEventListener('change', function () {
       if (cek.checked) { grup.addTo(map); grup.bringToFront(); }
       else map.removeLayer(grup);
+      simpanStatusLayer(def.id, cek.checked);
     });
 
     var label = document.createElement('span');
@@ -373,6 +408,7 @@
         l.grup.addTo(map);
         var cek = kotakOverlay.querySelector('input[data-layer="' + l.def.id + '"]');
         if (cek) cek.checked = true;
+        simpanStatusLayer(l.def.id, true);
       }
     });
 
