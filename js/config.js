@@ -58,6 +58,35 @@ var CONFIG = {
      --------------------------------------------------------------------- */
   layers: [
     {
+      id: 'bangunan',
+      nama: 'Bangunan',
+      tipe: 'poligon',
+      berkas: 'data/Data_Bangunan.geojson',
+      aktif: true,
+      fieldNama: 'Nama_Obj',
+      fieldKategori: 'Nama_Obj',
+      popup: {
+        'Kelas objek': 'Kelas_Obj',
+        'Keterangan': 'Keterangan',
+        'Luas (ha)': 'area',
+        'ID': 'id'
+      },
+      // Nuansa merah bata sampai ungu
+      warna: {
+        'Penginapan': '#c99266',
+        'Pemukiman': '#d9b48c',
+        'Warung Makan': '#c98a7d',
+        'Musholla': '#a595c4',
+        'Kanotor Desa': '#b07a8a',
+        'Toko': '#d4948f',
+        'Cafe': '#bd97a8',
+        'Bank': '#c2a178',
+        'Puskesmas': '#cd8fa8'
+      },
+      palet: ['#b5651d', '#d08c4a', '#c0392b', '#7a5ea8', '#8e3b46',
+              '#d7574f', '#a4637a', '#96522b', '#c2417a', '#e08a5f']
+    },
+    {
       id: 'lahan_kosong',
       nama: 'Lahan kosong',
       tipe: 'poligon',
@@ -100,35 +129,6 @@ var CONFIG = {
         'KWT Sari Mukti': '#bcd0a0',
       },
       palet: ['#a3c98a, #8fb875, #6f9c74, #bcd0a0, #7fb39a']
-    },
-    {
-      id: 'bangunan',
-      nama: 'Bangunan',
-      tipe: 'poligon',
-      berkas: 'data/Data_Bangunan.geojson',
-      aktif: true,
-      fieldNama: 'Nama_Obj',
-      fieldKategori: 'Nama_Obj',
-      popup: {
-        'Kelas objek': 'Kelas_Obj',
-        'Keterangan': 'Keterangan',
-        'Luas (ha)': 'area',
-        'ID': 'id'
-      },
-      // Nuansa merah bata sampai ungu
-      warna: {
-        'Penginapan': '#c99266',
-        'Pemukiman': '#d9b48c',
-        'Warung Makan': '#c98a7d',
-        'Musholla': '#a595c4',
-        'Kanotor Desa': '#b07a8a',
-        'Toko': '#d4948f',
-        'Cafe': '#bd97a8',
-        'Bank': '#c2a178',
-        'Puskesmas': '#cd8fa8'
-      },
-      palet: ['#b5651d', '#d08c4a', '#c0392b', '#7a5ea8', '#8e3b46',
-              '#d7574f', '#a4637a', '#96522b', '#c2417a', '#e08a5f']
     },
     {
       id: 'jalan',
