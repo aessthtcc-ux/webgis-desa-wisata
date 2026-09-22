@@ -21,23 +21,17 @@ var CONFIG = {
      kemudian aktifkan blok "Ortofoto" di bawah. */
   basemaps: [
     {
-      nama: 'Jalan',
+      nama: 'Open Street Map',
       url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       atribusi: '&copy; Kontributor OpenStreetMap',
       zoomMaksAsli: 19
     },
     {
-      nama: 'Citra',
+      nama: 'ESRI World Imagery',
       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       atribusi: 'Citra &copy; Esri',
       zoomMaksAsli: 19
     },
-    {
-      nama: 'Polos',
-      url: 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-      atribusi: '&copy; Kontributor OpenStreetMap, &copy; CARTO',
-      zoomMaksAsli: 19
-    }
     // ,{
     //   nama: 'Ortofoto',
     //   url: 'tiles/{z}/{x}/{y}.png',
