@@ -378,7 +378,6 @@
 
   var input = document.getElementById('search-input');
   var hasil = document.getElementById('search-results');
-  var tombolHapus = document.getElementById('search-clear');
   var sorot = -1;
 
   function cari(kata) {
