@@ -463,10 +463,20 @@
   var petunjukUkur = document.getElementById('measure-hint');
   var tombolSelesai = document.getElementById('measure-finish');
 
+  // Saat mode ukur aktif (belum selesai), klik pada layer data (popup, dsb.)
+  // dimatikan sementara supaya klik tembus ke peta dan bisa dipakai untuk
+  // menaruh/mengakhiri titik ukur meski berada tepat di atas layer yang nyala.
+  var paneOverlay = map.getPane('overlayPane');
+  function aturModeUkur(aktif) {
+    if (!paneOverlay) return;
+    paneOverlay.style.pointerEvents = aktif ? 'none' : '';
+  }
+
   var alat = new AlatUkur(map, {
     warna: '#c98f2b',
     onUbah: function (hasil) {
-      if (!hasil) { kotakUkur.hidden = true; segarkanTombol(); return; }
+      if (!hasil) { kotakUkur.hidden = true; aturModeUkur(false); segarkanTombol(); return; }
+      aturModeUkur(!hasil.selesai);
       kotakUkur.hidden = false;
       nilaiUkur.textContent = hasil.teks;
       tombolSelesai.textContent = hasil.selesai ? 'Ukur lagi' : 'Selesai';
