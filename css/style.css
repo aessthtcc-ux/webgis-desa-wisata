@@ -1,0 +1,312 @@
+:root{
+  --ink:#17231d;
+  --ink-soft:#54625a;
+  --paper:#faf8f3;
+  --line:#ddd6c8;
+  --moss:#2f6b4f;
+  --moss-dark:#22513c;
+  --saffron:#c98f2b;
+  --shadow:0 2px 10px rgba(23,35,29,.14);
+  --radius:6px;
+}
+
+*{box-sizing:border-box}
+
+html,body{height:100%;margin:0}
+
+body{
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  font-size:14px;
+  -webkit-text-size-adjust:100%;
+}
+
+#map{position:absolute;inset:0;background:#e8e4da}
+
+/* ---------- panel dasar ---------- */
+.panel{
+  position:absolute;
+  z-index:1000;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.panel-label{
+  margin:14px 0 6px;
+  font-size:11px;
+  letter-spacing:.02em;
+  color:var(--ink-soft);
+  font-weight:600;
+}
+.panel-label:first-child{margin-top:0}
+
+/* ---------- judul + pencarian ---------- */
+.panel-head{
+  top:12px;
+  left:56px;
+  width:330px;
+  max-width:calc(100vw - 72px);
+  padding:14px 16px 12px;
+}
+
+.brand h1{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:21px;
+  font-weight:700;
+  line-height:1.15;
+  margin:0;
+  letter-spacing:-.01em;
+}
+.brand p{
+  margin:3px 0 12px;
+  color:var(--ink-soft);
+  font-size:12.5px;
+  line-height:1.4;
+}
+
+.search{position:relative}
+
+.search input{
+  width:100%;
+  padding:9px 30px 9px 11px;
+  font:inherit;
+  font-size:13.5px;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  outline:none;
+}
+.search input::placeholder{color:#9aa49d}
+.search input:focus{border-color:var(--moss);box-shadow:0 0 0 3px rgba(47,107,79,.15)}
+
+#search-clear{
+  position:absolute;top:50%;right:6px;transform:translateY(-50%);
+  width:22px;height:22px;line-height:1;
+  border:0;background:none;color:var(--ink-soft);
+  font-size:18px;cursor:pointer;border-radius:4px;
+}
+#search-clear:hover{color:var(--ink);background:rgba(23,35,29,.06)}
+
+#search-results{
+  list-style:none;margin:6px 0 0;padding:4px;
+  max-height:240px;overflow-y:auto;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+#search-results li{
+  padding:7px 9px;border-radius:4px;cursor:pointer;line-height:1.3;
+}
+#search-results li:hover,#search-results li.active{background:#eef3ef}
+#search-results li b{display:block;font-weight:600;font-size:13.5px}
+#search-results li span{font-size:11.5px;color:var(--ink-soft)}
+#search-results li.empty{cursor:default;color:var(--ink-soft);font-size:12.5px}
+#search-results li.empty:hover{background:none}
+
+/* ---------- layer & legenda ---------- */
+.panel-layers{
+  top:12px;right:12px;
+  width:250px;
+  max-width:calc(100vw - 24px);
+  max-height:calc(100vh - 24px);
+  display:flex;flex-direction:column;
+}
+
+.panel-toggle{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  width:100%;padding:11px 14px;
+  font:inherit;font-weight:600;font-size:13px;color:var(--ink);
+  background:none;border:0;cursor:pointer;text-align:left;
+}
+.panel-toggle svg{transition:transform .18s ease;color:var(--ink-soft);flex:none}
+.panel-toggle[aria-expanded="false"] svg{transform:rotate(-90deg)}
+
+.panel-body{
+  padding:0 14px 14px;
+  overflow-y:auto;
+}
+.panel-body[hidden]{display:none}
+
+.basemap-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+
+.basemap{
+  padding:7px 8px;
+  font:inherit;font-size:12px;
+  background:#fff;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:4px;
+  cursor:pointer;text-align:center;
+}
+.basemap:hover{border-color:var(--moss)}
+.basemap.active{
+  background:var(--moss);border-color:var(--moss);color:#fff;font-weight:500;
+}
+
+.layer-item{border-top:1px solid var(--line);padding:9px 0 7px}
+.layer-item:first-child{border-top:0;padding-top:0}
+
+.layer-head{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.layer-head input{accent-color:var(--moss);width:15px;height:15px;flex:none;cursor:pointer}
+.layer-head span{font-weight:500;font-size:13px}
+.layer-head small{margin-left:auto;color:var(--ink-soft);font-size:11px;font-variant-numeric:tabular-nums}
+
+.legend{list-style:none;margin:7px 0 0;padding:0 0 0 23px}
+.legend li{display:flex;align-items:center;gap:7px;padding:2px 0;font-size:12px;color:var(--ink-soft)}
+.legend .swatch{width:14px;height:11px;border-radius:2px;flex:none;border:1px solid rgba(23,35,29,.25)}
+.legend .swatch.dot{width:11px;height:11px;border-radius:50%}
+.legend .swatch.line{height:0;border-radius:0;border-width:0 0 3px}
+
+/* ---------- tombol peta kiri ---------- */
+.leaflet-bar a,
+.map-btn{
+  width:34px;height:34px;line-height:34px;
+  display:block;text-align:center;
+  background:var(--paper);color:var(--ink);
+  border:0;border-bottom:1px solid var(--line);
+  font-size:15px;cursor:pointer;padding:0;
+}
+.map-btn{font-family:inherit}
+.leaflet-bar,.map-btn-group{
+  border:1px solid var(--line)!important;
+  border-radius:var(--radius)!important;
+  box-shadow:var(--shadow)!important;
+  overflow:hidden;
+}
+.map-btn-group{background:var(--paper)}
+.map-btn:last-child,.leaflet-bar a:last-child{border-bottom:0}
+.map-btn:hover,.leaflet-bar a:hover{background:#eef3ef}
+.map-btn.active{background:var(--moss);color:#fff}
+.map-btn svg{vertical-align:middle;margin-top:-2px}
+
+/* ---------- pengukuran ---------- */
+.measure-readout{
+  position:absolute;z-index:1000;
+  left:50%;bottom:26px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  max-width:calc(100vw - 24px);
+  padding:9px 12px;
+  background:var(--paper);
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+#measure-value{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:17px;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  min-width:96px;
+}
+.measure-readout button{
+  padding:6px 11px;font:inherit;font-size:12.5px;font-weight:500;
+  background:var(--moss);color:#fff;
+  border:0;border-radius:4px;cursor:pointer;
+}
+.measure-readout button:hover{background:var(--moss-dark)}
+.measure-readout button.ghost{background:none;color:var(--ink-soft)}
+.measure-readout button.ghost:hover{background:rgba(23,35,29,.07);color:var(--ink)}
+.measure-readout .hint{
+  flex-basis:100%;margin:0;font-size:11.5px;color:var(--ink-soft);
+}
+.measure-tooltip{
+  background:var(--ink);color:#fff;border:0;
+  padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;
+  box-shadow:none;
+}
+.measure-tooltip::before{display:none}
+
+/* ---------- popup ---------- */
+.leaflet-popup-content-wrapper{
+  border-radius:var(--radius);
+  background:var(--paper);
+  box-shadow:var(--shadow);
+  padding:0;
+}
+.leaflet-popup-content{margin:0;width:250px!important;line-height:1.45}
+.leaflet-popup-tip{background:var(--paper)}
+
+.popup-head{
+  padding:11px 14px 9px;
+  border-bottom:1px solid var(--line);
+}
+.popup-head h3{
+  font-family:"Fraunces",Georgia,serif;
+  margin:0;font-size:16px;font-weight:700;line-height:1.2;
+}
+.popup-head p{margin:3px 0 0;font-size:12px;color:var(--ink-soft)}
+
+.popup-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.popup-table th,.popup-table td{
+  padding:6px 14px;text-align:left;vertical-align:top;
+  border-bottom:1px solid rgba(221,214,200,.6);
+}
+.popup-table tr:last-child th,.popup-table tr:last-child td{border-bottom:0}
+.popup-table th{font-weight:500;color:var(--ink-soft);width:44%}
+.popup-table td{font-weight:500}
+.popup-img{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+
+/* ---------- skala & atribusi ---------- */
+.leaflet-control-scale-line{
+  background:rgba(250,248,243,.85);
+  border-color:var(--ink-soft);
+  color:var(--ink);
+  font-size:11px;
+  border-radius:0 3px 3px 0;
+}
+.leaflet-control-attribution{
+  background:rgba(250,248,243,.85)!important;
+  font-size:10.5px;color:var(--ink-soft);
+}
+.leaflet-control-attribution a{color:var(--moss)}
+
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+
+/* ---------- layar kecil ---------- */
+@media (max-width:640px){
+  .panel-head{
+    left:12px;right:12px;top:auto;bottom:12px;width:auto;max-width:none;
+    padding:12px 13px;
+  }
+  .brand h1{font-size:17px}
+  .brand p{display:none}
+  .panel-layers{top:12px;right:12px;width:210px}
+  .panel-layers .panel-body{max-height:45vh}
+  #search-results{
+    position:absolute;bottom:100%;margin:0 0 6px;left:0;right:0;max-height:40vh;
+  }
+  .measure-readout{bottom:auto;top:12px;left:56px;transform:none;right:auto}
+}
+
+/* fitur tidak diklik saat mode ukur aktif */
+.measuring .leaflet-overlay-pane,
+.measuring .leaflet-marker-pane{pointer-events:none}
+
+/* ---------- pesan galat pemuatan data ---------- */
+.error-box{
+  position:absolute;z-index:1200;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(460px,calc(100vw - 32px));
+  padding:18px 20px;
+  background:var(--paper);
+  border:1px solid var(--line);border-left:4px solid #c0392b;
+  border-radius:var(--radius);box-shadow:var(--shadow);
+}
+.error-box h2{
+  font-family:"Fraunces",Georgia,serif;
+  margin:0 0 6px;font-size:17px;
+}
+.error-box p{margin:0;line-height:1.5;color:var(--ink-soft)}
+.error-box code{
+  background:rgba(23,35,29,.07);padding:1px 4px;border-radius:3px;
+  font-size:12.5px;
+}
+.error-box pre{
+  margin:10px 0 0;padding:8px 10px;overflow-x:auto;
+  background:rgba(23,35,29,.06);border-radius:4px;
+  font-size:11.5px;color:var(--ink-soft);white-space:pre-wrap;
+}
