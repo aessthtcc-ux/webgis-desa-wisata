@@ -22,6 +22,20 @@
   L.control.zoom({ position: 'topleft' }).addTo(map);
   L.control.scale({ position: 'bottomleft', imperial: false, maxWidth: 140 }).addTo(map);
 
+  // Leaflet menandai tiap fitur vektor (garis/poligon/titik) sebagai
+  // "leaflet-interactive" dengan pointer-events miliknya sendiri, jadi
+  // mematikan pointer-events di overlayPane saja tidak cukup (aturan pada
+  // elemen fitur tetap menang). Aturan berikut menimpanya lewat !important,
+  // hanya berlaku saat kelas "mengukur" ada pada kontainer peta.
+  (function suntikStyleUkur() {
+    var gaya = document.createElement('style');
+    gaya.textContent =
+      '.leaflet-container.mengukur .leaflet-interactive {' +
+      'pointer-events: none !important;' +
+      '}';
+    document.head.appendChild(gaya);
+  })();
+
   /* ----------------------------------------------------------- peta dasar */
 
   var basemapAktif = null;
@@ -466,10 +480,9 @@
   // Saat mode ukur aktif (belum selesai), klik pada layer data (popup, dsb.)
   // dimatikan sementara supaya klik tembus ke peta dan bisa dipakai untuk
   // menaruh/mengakhiri titik ukur meski berada tepat di atas layer yang nyala.
-  var paneOverlay = map.getPane('overlayPane');
+  var kontainerPeta = map.getContainer();
   function aturModeUkur(aktif) {
-    if (!paneOverlay) return;
-    paneOverlay.style.pointerEvents = aktif ? 'none' : '';
+    kontainerPeta.classList.toggle('mengukur', !!aktif);
   }
 
   var alat = new AlatUkur(map, {
