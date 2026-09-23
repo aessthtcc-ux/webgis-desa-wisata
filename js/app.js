@@ -378,7 +378,6 @@
 
   var input = document.getElementById('search-input');
   var hasil = document.getElementById('search-results');
-  var tombolHapus = document.getElementById('search-clear');
   var sorot = -1;
 
   function cari(kata) {
@@ -435,7 +434,6 @@
   }
 
   input.addEventListener('input', function () {
-    tombolHapus.hidden = !input.value;
     if (input.value.trim().length < 2) { hasil.hidden = true; return; }
     tampilHasil(cari(input.value));
   });
@@ -457,13 +455,6 @@
     } else if (e.key === 'Escape') {
       hasil.hidden = true;
     }
-  });
-
-  tombolHapus.addEventListener('click', function () {
-    input.value = '';
-    tombolHapus.hidden = true;
-    hasil.hidden = true;
-    input.focus();
   });
 
   document.addEventListener('click', function (e) {
