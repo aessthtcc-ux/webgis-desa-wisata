@@ -29,6 +29,11 @@
 
   .wadah { max-width: 980px; margin: 0 auto; padding: 0 20px; }
 
+  /* skala wadah lebih lega di layar besar */
+  @media (min-width: 1400px) {
+    .wadah { max-width: 1100px; }
+  }
+
   /* ------------------------------------------------------------ hero */
 
   .hero {
@@ -66,7 +71,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 12px; font-weight: 700; letter-spacing: .06em;
     color: var(--hijau-tua); background: var(--aksen);
-    border-radius: 999px; padding: 10px 20px; margin-bottom: 18px;
+    border-radius: 999px; padding: 6px 14px; margin-bottom: 18px;
   }
 
   .hero h1 {
@@ -129,9 +134,7 @@
   .b-tentang {
     grid-column: span 2;
     grid-row: span 2;
-    background: 
-      radial-gradient(circle at 15% 15%, rgba(200,240,74,.18), transparent 50%),
-      linear-gradient(180deg, rgba(23,42,32,.65) 0%, rgba(23,42,32,.92) 100%);
+    background: var(--hijau-tua);
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -173,10 +176,41 @@
 
   .catatan-dummy { font-size: 12px; color: var(--teks-muda); opacity: .6; margin-top: 14px; }
 
-  @media (max-width: 720px) {
-    .bento { grid-template-columns: repeat(2, 1fr); }
-    .b-tentang { grid-column: span 2; grid-row: auto; }
-    .b-potensi.lebar4 { grid-column: span 2; }
+  /* ============================================================ RESPONSIF */
+
+  /* ---- Tablet: 641px – 1024px ---- */
+  @media (max-width: 1024px) {
+    .wadah { padding: 0 32px; }
+    .hero { min-height: 76vh; }
+    .bento { grid-template-columns: repeat(3, 1fr); }
+    .b-tentang { grid-column: span 3; grid-row: auto; }
+    .b-stat { grid-column: span 1; }
+    .b-potensi.lebar2 { grid-column: span 3; }
+    .b-potensi.lebar4 { grid-column: span 3; }
+  }
+
+  /* ---- Mobile: <= 640px ---- */
+  @media (max-width: 640px) {
+    .wadah { padding: 0 24px; }
+    .hero { min-height: 82vh; padding: 20px 16px; }
+    .hero h1 { font-size: clamp(28px, 9vw, 36px); }
+    .hero p.tagline { font-size: 14px; }
+    .hero-tombol { flex-direction: column; width: 100%; }
+    .hero-tombol .tombol { width: 100%; justify-content: center; }
+
+    .bento-wadah { padding: 40px 0; }
+    .bento { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .b-tentang { grid-column: span 2; padding: 22px; }
+    .b-tentang h2 { font-size: 19px; }
+    .b-stat { grid-column: span 1; padding: 18px 12px; }
+    .b-potensi.lebar2, .b-potensi.lebar4 { grid-column: span 2; }
+    .b-potensi.lebar4 { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ---- Mobile kecil: <= 380px, statistik ditumpuk 1 kolom ---- */
+  @media (max-width: 380px) {
+    .bento { grid-template-columns: 1fr; }
+    .b-tentang, .b-stat, .b-potensi.lebar2, .b-potensi.lebar4 { grid-column: span 1; }
   }
 
   footer {
@@ -260,6 +294,8 @@
         </div>
       </div>
     </div>
+
+    <p class="catatan-dummy">*Angka pada kartu statistik bersifat ilustratif (dummy) — sesuaikan dengan data resmi desa.</p>
   </section>
 
   <footer>
