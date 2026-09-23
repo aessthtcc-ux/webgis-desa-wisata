@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WebGIS Penggunaan Lahan Desa Wisata</title>
+<title>Desa Srinanti — WebGIS Penggunaan Lahan</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,152 +15,256 @@
     --hijau-tua: #172a20;
     --hijau: #2f6b4f;
     --aksen: #c8f04a;
-    --teks-muda: #d8e3d3;
-    --garis: rgba(255,255,255,.18);
+    --teks: #2b2b26;
+    --teks-muda: #6b6b60;
+    --garis: #e3ddc9;
   }
 
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--teks); background: var(--krem); }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
+  h1, h2 { font-family: 'Fraunces', serif; margin: 0; }
+  img { max-width: 100%; display: block; }
 
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    color: #fff;
+  .wadah { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+  /* ------------------------------------------------------------ hero */
+
+  .hero {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    color: #fff;
     padding: 24px;
-    position: relative;
-    overflow-x: hidden;
-    background: var(--hijau-tua);
+    overflow: hidden;
   }
 
-  /* foto latar */
-  body::before {
+  .hero::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: absolute; inset: 0;
     background-image: url('https://images.unsplash.com/photo-1559628233-100c798642d4?fm=jpg&q=80&w=2400&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     opacity: 1;
-    filter: saturate(1.1);
-    z-index: 0;
   }
 
-  /* gradasi biar kartu tetap kebaca */
-  body::after {
+  .hero::after {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: absolute; inset: 0;
     background:
       radial-gradient(circle at 15% 15%, rgba(200,240,74,.18), transparent 45%),
       linear-gradient(180deg, rgba(23,42,32,.65) 0%, rgba(23,42,32,.92) 100%);
-    z-index: 0;
   }
 
-  .kartu {
-    position: relative;
-    z-index: 1;
-    max-width: 560px;
-    width: 100%;
-    background: rgba(255,255,255,.08);
-    border: 1px solid var(--garis);
-    border-radius: 28px;
-    padding: 48px 40px;
-    text-align: center;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 24px 60px rgba(0,0,0,.35);
-  }
+  .hero-isi { position: relative; z-index: 1; max-width: 600px; }
 
   .lencana {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--hijau-tua);
-    background: var(--aksen);
-    border-radius: 999px;
-    padding: 7px 16px;
-    margin-bottom: 22px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; letter-spacing: .06em;
+    color: var(--hijau-tua); background: var(--aksen);
+    border-radius: 999px; padding: 10px 20px; margin-bottom: 18px;
   }
 
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(30px, 5vw, 30px);
-    line-height: 1.15;
-    margin: 0 0 30px;
-    color: #fff;
-    letter-spacing: -.01em;
+  .hero h1 {
+    font-weight: 900; font-size: clamp(34px, 6vw, 50px); line-height: 1.08;
+    letter-spacing: -.01em; margin-bottom: 10px;
   }
 
-  p.deskripsi {
-    font-size: 15.5px;
-    line-height: 1.65;
-    color: var(--teks-muda);
-    margin: 0 0 34px;
+  .hero .lokasi {
+    font-size: 14.5px; color: var(--aksen); font-weight: 600; margin-bottom: 16px;
+  }
+
+  .hero p.tagline {
+    font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.8); margin: 0 0 28px;
   }
 
   .tombol {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--aksen);
-    color: var(--hijau-tua);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 15px 30px;
-    border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--aksen); color: var(--hijau-tua);
+    text-decoration: none; font-weight: 700; font-size: 14.5px;
+    padding: 14px 26px; border-radius: 999px;
     transition: transform .15s ease, box-shadow .15s ease;
     box-shadow: 0 8px 20px rgba(200,240,74,.25);
   }
+  .tombol:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 12px 28px rgba(200,240,74,.35); }
+  .tombol svg { width: 15px; height: 15px; }
 
-  .tombol:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 12px 28px rgba(200,240,74,.35);
+  .tombol.garis {
+    background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.5);
+    box-shadow: none;
+  }
+  .tombol.garis:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+
+  .hero-tombol { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* ------------------------------------------------------------ label section */
+
+  .label-section {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--hijau); margin-bottom: 10px;
   }
 
-  .tombol svg {
-    width: 16px;
-    height: 16px;
+  /* ------------------------------------------------------------ bento: gabungan tentang + statistik + potensi */
+
+  .bento-wadah { padding: 56px 0; }
+
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 20px;
   }
 
-  .keterangan {
-    margin-top: 22px;
-    font-size: 12.5px;
-    color: rgba(255,255,255,.5);
+  .bento > * {
+    border-radius: 22px;
+    padding: 24px;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .bento > *:hover { transform: translateY(-3px); }
+
+  .b-tentang {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: 
+      radial-gradient(circle at 15% 15%, rgba(200,240,74,.18), transparent 50%),
+      linear-gradient(180deg, rgba(23,42,32,.65) 0%, rgba(23,42,32,.92) 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 16px 40px rgba(23,42,32,.18);
+  }
+  .b-tentang .label-section { color: var(--aksen); }
+  .b-tentang h2 { color: #fff; font-size: 21px; font-weight: 700; margin-bottom: 10px; line-height: 1.25; }
+  .b-tentang p { font-size: 13.8px; line-height: 1.68; color: rgba(255,255,255,.78); margin: 0; }
+
+  .b-stat {
+    background: #fff;
+    border: 1px solid var(--garis);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+  .b-stat .angka { font-family: 'Fraunces', serif; font-weight: 700; font-size: 23px; color: var(--hijau); }
+  .b-stat .keterangan { font-size: 11.5px; color: var(--teks-muda); }
+
+  .b-potensi {
+    background: #fff;
+    border: 1px solid var(--garis);
+  }
+  .b-potensi.lebar2 { grid-column: span 2; }
+  .b-potensi.lebar4 {
+    grid-column: span 4;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .b-potensi .ikon { font-size: 21px; margin-bottom: 8px; }
+  .b-potensi.lebar4 .ikon { margin-bottom: 0; flex-shrink: 0; }
+  .b-potensi h3 { font-family: 'Inter', sans-serif; font-size: 14.5px; font-weight: 700; margin: 0 0 4px; color: var(--hijau-tua); }
+  .b-potensi p { font-size: 13px; line-height: 1.55; color: var(--teks-muda); margin: 0; }
+
+  .catatan-dummy { font-size: 12px; color: var(--teks-muda); opacity: .6; margin-top: 14px; }
+
+  @media (max-width: 720px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .b-tentang { grid-column: span 2; grid-row: auto; }
+    .b-potensi.lebar4 { grid-column: span 2; }
+  }
+
+  footer {
+    text-align: center; padding: 28px 20px; font-size: 12.5px; color: var(--teks-muda);
   }
 </style>
 </head>
 <body>
 
-  <main class="kartu">
-    <span class="lencana">🌾 WebGIS Desa Wisata</span>
-    <h1>Peta Penggunaan Lahan Desa</h1>
-    <p class="deskripsi">
-      Platform pemetaan hasil digitasi foto udara desa, mencakup sebaran
-      jalan, bangunan, vegetasi, dan lahan kosong. Jelajahi peta interaktif
-      untuk melihat detail tiap objek, mencari lokasi tertentu, dan mengukur
-      jarak maupun luas area secara langsung di peta.
-    </p>
-    <a class="tombol" href="peta.html">
-      Buka Peta Interaktif
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M13 6l6 6-6 6"/>
-      </svg>
-    </a>
-  </main>
+  <!-- ============================================================ HERO -->
+  <header class="hero">
+    <div class="hero-isi">
+      <span class="lencana">WebGIS Desa Wisata</span>
+      <h1>Desa Srinanti</h1>
+      <p class="lokasi">Kecamatan Sei Menggaris · Kabupaten Nunukan · Kalimantan Utara</p>
+      <p class="tagline">
+        Desa di kawasan perbatasan Indonesia–Malaysia yang berkembang lewat
+        pertanian, perkebunan, dan pengelolaan sumber daya air bersama.
+        Jelajahi sebaran penggunaan lahan desa lewat peta interaktif.
+      </p>
+      <div class="hero-tombol">
+        <a class="tombol" href="peta.html">
+          Buka Peta Interaktif
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="tombol garis" href="#info">Tentang Desa</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ BENTO: TENTANG + STATISTIK + POTENSI -->
+  <section id="info" class="wadah bento-wadah">
+    <span class="label-section">Profil Desa</span>
+    <h2 style="font-size: clamp(22px, 3.5vw, 28px); font-weight: 700; color: var(--hijau-tua);">Mengenal Desa Srinanti</h2>
+
+    <div class="bento">
+      <div class="b-tentang">
+        <span class="label-section">Tentang</span>
+        <h2>Desa perbatasan yang tumbuh dari air &amp; lahan</h2>
+        <p>
+          Desa Srinanti berada di Kecamatan Sei Menggaris, Kabupaten Nunukan,
+          Kalimantan Utara — wilayah perbatasan darat Indonesia–Malaysia.
+          Desa ini aktif membangun secara mandiri, termasuk revitalisasi
+          sistem air minum (SPAM), dan pernah meraih prestasi sebagai desa
+          terbaik tingkat provinsi.
+        </p>
+      </div>
+
+      <div class="b-stat">
+        <div class="angka">±1.250</div>
+        <div class="keterangan">Jiwa Penduduk</div>
+      </div>
+      <div class="b-stat">
+        <div class="angka">6</div>
+        <div class="keterangan">Dusun / RT</div>
+      </div>
+      <div class="b-stat">
+        <div class="angka">±18 km²</div>
+        <div class="keterangan">Luas Wilayah</div>
+      </div>
+      <div class="b-stat">
+        <div class="angka">4</div>
+        <div class="keterangan">Kelas Tutupan Lahan</div>
+      </div>
+
+      <div class="b-potensi lebar2">
+        <div class="ikon">🌴</div>
+        <h3>Perkebunan &amp; Pertanian</h3>
+        <p>Lahan sawit dan pertanian jadi salah satu sumber mata pencaharian utama warga.</p>
+      </div>
+      <div class="b-potensi lebar2">
+        <div class="ikon">💧</div>
+        <h3>Pengelolaan Air Bersih</h3>
+        <p>Sistem penyediaan air minum (SPAM) desa yang dikelola mandiri oleh warga.</p>
+      </div>
+      <div class="b-potensi lebar4">
+        <div class="ikon">🏘️</div>
+        <div>
+          <h3>Permukiman &amp; Fasilitas Desa</h3>
+          <p>Sebaran bangunan mulai dari permukiman, kantor desa, hingga fasilitas umum — semuanya terpetakan di peta interaktif.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    WebGIS Penggunaan Lahan — Desa Srinanti, Kecamatan Sei Menggaris, Kabupaten Nunukan, Kalimantan Utara
+  </footer>
 
 </body>
 </html>
