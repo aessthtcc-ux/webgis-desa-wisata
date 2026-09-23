@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Peta Interaktif — WebGIS Penggunaan Lahan Desa Wisata</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Panel judul + pencarian -->
+<div class="panel panel-head">
+  <div class="brand">
+    <h1>Peta Penggunaan Lahan Desa</h1>
+    <p>Hasil digitasi foto udara: jalan, bangunan, vegetasi, lahan kosong</p>
+  </div>
+
+  <div class="search">
+    <input id="search-input" type="search" autocomplete="off"
+           placeholder="Cari objek, mis. penginapan" aria-label="Cari objek">
+    <ul id="search-results" role="listbox" hidden></ul>
+  </div>
+</div>
+
+<!-- Panel layer + legenda -->
+<div class="panel panel-layers" id="panel-layers">
+  <button class="panel-toggle" id="layers-toggle" aria-expanded="true">
+    <span>Layer &amp; legenda</span>
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <div class="panel-body" id="layers-body">
+    <p class="panel-label">Basemap</p>
+    <div id="basemap-list" class="basemap-list"></div>
+
+    <p class="panel-label">Data amenitas</p>
+    <div id="overlay-list" class="overlay-list"></div>
+  </div>
+</div>
+
+<!-- Kotak hasil pengukuran -->
+<div class="measure-readout" id="measure-readout" hidden>
+  <span id="measure-value">0 m</span>
+  <button id="measure-finish" type="button">Selesai</button>
+  <button id="measure-clear" type="button" class="ghost">Hapus</button>
+  <p class="hint" id="measure-hint">Klik di peta untuk menambah titik.</p>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Data GeoJSON dimuat oleh app.js sesuai daftar di js/config.js.
+     Karena memakai fetch, halaman harus dijalankan lewat server lokal
+     (lihat README). Untuk mode klik-dua-kali tanpa server, ubah berkas
+     .geojson menjadi .js lalu pakai kunci `variabel` di config.js. -->
+
+<script src="js/config.js"></script>
+<script src="js/measure.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

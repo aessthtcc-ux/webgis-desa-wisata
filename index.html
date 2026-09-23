@@ -2,68 +2,131 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WebGIS Penggunaan Lahan Desa Wisata</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="css/style.css">
+<style>
+  :root {
+    --krem: #faf6ec;
+    --hijau-tua: #23372b;
+    --hijau: #2f6b4f;
+    --teks: #2b2b26;
+    --teks-muda: #5c5c52;
+    --garis: #e3ddc9;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--krem);
+    color: var(--teks);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .kartu {
+    max-width: 560px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: 0 12px 32px rgba(35, 55, 43, 0.06);
+  }
+
+  .lencana {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--hijau);
+    background: #eef4ec;
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 36px);
+    line-height: 1.2;
+    margin: 0 0 16px;
+    color: var(--hijau-tua);
+  }
+
+  p.deskripsi {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--teks-muda);
+    margin: 0 0 32px;
+  }
+
+  .tombol {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--hijau-tua);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    transition: background .15s ease, transform .15s ease;
+  }
+
+  .tombol:hover {
+    background: var(--hijau);
+    transform: translateY(-1px);
+  }
+
+  .tombol svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .keterangan {
+    margin-top: 24px;
+    font-size: 13px;
+    color: #8a8a7e;
+  }
+</style>
 </head>
 <body>
 
-<div id="map"></div>
-
-<!-- Panel judul + pencarian -->
-<div class="panel panel-head">
-  <div class="brand">
+  <main class="kartu">
+    <span class="lencana">WebGIS Desa Wisata</span>
     <h1>Peta Penggunaan Lahan Desa</h1>
-    <p>Hasil digitasi foto udara: jalan, bangunan, vegetasi, lahan kosong</p>
-  </div>
+    <p class="deskripsi">
+      Platform pemetaan hasil digitasi foto udara desa, mencakup sebaran
+      jalan, bangunan, vegetasi, dan lahan kosong. Jelajahi peta interaktif
+      untuk melihat detail tiap objek, mencari lokasi tertentu, dan mengukur
+      jarak maupun luas area secara langsung di peta.
+    </p>
+    <a class="tombol" href="peta.html">
+      Buka Peta Interaktif
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </a>
+    <p class="keterangan">Hasil digitasi foto udara desa</p>
+  </main>
 
-  <div class="search">
-    <input id="search-input" type="search" autocomplete="off"
-           placeholder="Cari objek, mis. penginapan" aria-label="Cari objek">
-    <button id="search-clear" type="button" aria-label="Hapus pencarian" hidden>&times;</button>
-    <ul id="search-results" role="listbox" hidden></ul>
-  </div>
-</div>
-
-<!-- Panel layer + legenda -->
-<div class="panel panel-layers" id="panel-layers">
-  <button class="panel-toggle" id="layers-toggle" aria-expanded="true">
-    <span>Layer &amp; legenda</span>
-    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-
-  <div class="panel-body" id="layers-body">
-    <p class="panel-label">Basemap</p>
-    <div id="basemap-list" class="basemap-list"></div>
-
-    <p class="panel-label">Data amenitas</p>
-    <div id="overlay-list" class="overlay-list"></div>
-  </div>
-</div>
-
-<!-- Kotak hasil pengukuran -->
-<div class="measure-readout" id="measure-readout" hidden>
-  <span id="measure-value">0 m</span>
-  <button id="measure-finish" type="button">Selesai</button>
-  <button id="measure-clear" type="button" class="ghost">Hapus</button>
-  <p class="hint" id="measure-hint">Klik di peta untuk menambah titik.</p>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Data GeoJSON dimuat oleh app.js sesuai daftar di js/config.js.
-     Karena memakai fetch, halaman harus dijalankan lewat server lokal
-     (lihat README). Untuk mode klik-dua-kali tanpa server, ubah berkas
-     .geojson menjadi .js lalu pakai kunci `variabel` di config.js. -->
-
-<script src="js/config.js"></script>
-<script src="js/measure.js"></script>
-<script src="js/app.js"></script>
 </body>
 </html>
