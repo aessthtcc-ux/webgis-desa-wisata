@@ -7,16 +7,16 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
     --krem: #faf6ec;
-    --hijau-tua: #23372b;
+    --hijau-tua: #172a20;
     --hijau: #2f6b4f;
-    --teks: #2b2b26;
-    --teks-muda: #5c5c52;
-    --garis: #e3ddc9;
+    --aksen: #c8f04a;
+    --teks-muda: #d8e3d3;
+    --garis: rgba(255,255,255,.18);
   }
 
   * { box-sizing: border-box; }
@@ -28,71 +28,106 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background: var(--krem);
-    color: var(--teks);
+    color: #fff;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    position: relative;
+    overflow-x: hidden;
+    background: var(--hijau-tua);
+  }
+
+  /* foto latar */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1559628233-100c798642d4?fm=jpg&q=80&w=2400&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    opacity: .38;
+    filter: saturate(1.1);
+    z-index: 0;
+  }
+
+  /* gradasi biar kartu tetap kebaca */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(200,240,74,.18), transparent 45%),
+      linear-gradient(180deg, rgba(23,42,32,.65) 0%, rgba(23,42,32,.92) 100%);
+    z-index: 0;
   }
 
   .kartu {
+    position: relative;
+    z-index: 1;
     max-width: 560px;
     width: 100%;
-    background: #fff;
+    background: rgba(255,255,255,.08);
     border: 1px solid var(--garis);
-    border-radius: 20px;
+    border-radius: 28px;
     padding: 48px 40px;
     text-align: center;
-    box-shadow: 0 12px 32px rgba(35, 55, 43, 0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.35);
   }
 
   .lencana {
-    display: inline-block;
-    font-size: 12.5px;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: var(--hijau);
-    background: #eef4ec;
+    color: var(--hijau-tua);
+    background: var(--aksen);
     border-radius: 999px;
-    padding: 6px 14px;
-    margin-bottom: 20px;
+    padding: 7px 16px;
+    margin-bottom: 22px;
   }
 
   h1 {
     font-family: 'Fraunces', serif;
-    font-weight: 700;
-    font-size: clamp(28px, 4vw, 36px);
-    line-height: 1.2;
+    font-weight: 900;
+    font-size: clamp(30px, 5vw, 40px);
+    line-height: 1.15;
     margin: 0 0 16px;
-    color: var(--hijau-tua);
+    color: #fff;
+    letter-spacing: -.01em;
   }
 
   p.deskripsi {
     font-size: 15.5px;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--teks-muda);
-    margin: 0 0 32px;
+    margin: 0 0 34px;
   }
 
   .tombol {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--hijau-tua);
-    color: #fff;
+    background: var(--aksen);
+    color: var(--hijau-tua);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 15px;
-    padding: 14px 28px;
+    padding: 15px 30px;
     border-radius: 999px;
-    transition: background .15s ease, transform .15s ease;
+    transition: transform .15s ease, box-shadow .15s ease;
+    box-shadow: 0 8px 20px rgba(200,240,74,.25);
   }
 
   .tombol:hover {
-    background: var(--hijau);
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(200,240,74,.35);
   }
 
   .tombol svg {
@@ -101,16 +136,16 @@
   }
 
   .keterangan {
-    margin-top: 24px;
-    font-size: 13px;
-    color: #8a8a7e;
+    margin-top: 22px;
+    font-size: 12.5px;
+    color: rgba(255,255,255,.5);
   }
 </style>
 </head>
 <body>
 
   <main class="kartu">
-    <span class="lencana">WebGIS Desa Wisata</span>
+    <span class="lencana">🌾 WebGIS Desa Wisata</span>
     <h1>Peta Penggunaan Lahan Desa</h1>
     <p class="deskripsi">
       Platform pemetaan hasil digitasi foto udara desa, mencakup sebaran
@@ -120,12 +155,11 @@
     </p>
     <a class="tombol" href="peta.html">
       Buka Peta Interaktif
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M13 6l6 6-6 6"/>
       </svg>
     </a>
-    <p class="keterangan">Hasil digitasi foto udara desa</p>
   </main>
 
 </body>
